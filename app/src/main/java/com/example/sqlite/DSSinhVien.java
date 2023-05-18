@@ -3,11 +3,11 @@ package com.example.sqlite;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +16,8 @@ public class DSSinhVien extends AppCompatActivity {
     private RecyclerView rcvStudents;
     private List<SinhVien> mListSinhVien;
     private SinhVienAdapter mSinhVienAdapter;
-    Database database;
-
+    private Database database;
+    private String idCurrentClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,16 @@ public class DSSinhVien extends AppCompatActivity {
         database = new Database(this);
 
         initUI();
+
+        Intent intent = getIntent();
+        idCurrentClass = intent.getStringExtra("id");
+        String name = intent.getStringExtra("name");
+        String students = intent.getStringExtra("students");
+
+        tvIdClass.setText(idCurrentClass);
+        tvNameClass.setText(name);
+        tvStudentsClass.setText(students);
+
 
         getListSinhVien();
     }
@@ -53,5 +63,18 @@ public class DSSinhVien extends AppCompatActivity {
 
     private void getListSinhVien() {
 
+        Cursor dataSinhVien = database.getData("SELECT * FROM SinhVien");
+
+        while (dataSinhVien.moveToNext()) {
+            Integer id_class = dataSinhVien.getInt(3);
+            if (id_class.toString().equals(idCurrentClass)) {
+                int id = dataSinhVien.getInt(0);
+                String name = dataSinhVien.getString(1);
+                String dob = dataSinhVien.getString(2);
+                Integer resource = dataSinhVien.getInt(4);
+                mListSinhVien.add(new SinhVien(id,name,dob,id_class,resource));
+            }
+        }
+        mSinhVienAdapter.notifyDataSetChanged();
     }
 }

@@ -6,19 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class LopHocAdapter extends RecyclerView.Adapter<LopHocAdapter.LopHocViewHolder>{
     private List<LopHoc> mListLopHoc;
     private Context context;
 
-    public LopHocAdapter(List<LopHoc> mListLopHoc, Context context) {
+    private Callback callback;
+
+    public LopHocAdapter(List<LopHoc> mListLopHoc, Context context, Callback callback) {
         this.mListLopHoc = mListLopHoc;
         this.context = context;
+        this.callback = callback;
     }
 
     @NonNull
@@ -43,7 +44,11 @@ public class LopHocAdapter extends RecyclerView.Adapter<LopHocAdapter.LopHocView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(context, DSSinhVien.class);
+                intent.putExtra("id",lopHoc.getId().toString());
+                intent.putExtra("name", lopHoc.getName());
+                intent.putExtra("students", lopHoc.getStudent().toString());
+                callback.callback(intent);
             }
         });
     }

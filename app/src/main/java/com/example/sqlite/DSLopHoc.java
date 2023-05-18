@@ -44,14 +44,17 @@ public class DSLopHoc extends AppCompatActivity {
         rcvClass.setLayoutManager(linearLayoutManager);
 
         mListLopHoc = new ArrayList<>();
-        mLopHocAdapter = new LopHocAdapter(mListLopHoc);
+        mLopHocAdapter = new LopHocAdapter(mListLopHoc, DSLopHoc.this, new Callback() {
+            @Override
+            public void callback(Intent intent) {
+                startActivity(intent);
+            }
+        });
 
         rcvClass.setAdapter(mLopHocAdapter);
     }
 
     private void getListLopHoc() {
-//        database.addNewClass();
-//        database.addNewStudent();
 
         Cursor dataLopHoc = database.getData("SELECT * FROM LopHoc");
 
@@ -61,7 +64,6 @@ public class DSLopHoc extends AppCompatActivity {
             int students = dataLopHoc.getInt(2);
             mListLopHoc.add(new LopHoc(id,name,students));
         }
-
 
         mLopHocAdapter.notifyDataSetChanged();
     }

@@ -18,7 +18,7 @@ public class SinhVien {
         this.resourceId = resourceId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

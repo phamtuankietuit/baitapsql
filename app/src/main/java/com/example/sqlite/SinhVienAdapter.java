@@ -1,15 +1,12 @@
 package com.example.sqlite;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
-
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class SinhVienAdapter extends RecyclerView.Adapter<SinhVienAdapter.SinhVienViewHolder>{
@@ -34,11 +31,25 @@ public class SinhVienAdapter extends RecyclerView.Adapter<SinhVienAdapter.SinhVi
             return;
         }
 
-        holder.editIdStudent.setText(sinhVien.getId());
-        holder.editNameStudent.setText(sinhVien.getName());
-        holder.editDobStudent.setText(sinhVien.getDob());
-        holder.imgAvtStudent.setImageResource(sinhVien.getResourceId());
+        holder.tvIdStudent.setText(sinhVien.getId().toString());
+        holder.tvNameStudent.setText(sinhVien.getName());
+        holder.tvDobStudent.setText(sinhVien.getDob());
 
+        switch (sinhVien.getResourceId())
+        {
+            case 1:
+                holder.imgAvtStudent.setImageResource(R.drawable.img_avt_1);
+                break;
+            case 2:
+                holder.imgAvtStudent.setBackgroundResource(R.drawable.img_avt_2);
+                break;
+            case 3:
+                holder.imgAvtStudent.setBackgroundResource(R.drawable.img_avt_3);
+                break;
+            case 4:
+                holder.imgAvtStudent.setBackgroundResource(R.drawable.img_avt_4);
+                break;
+        }
 
     }
 
@@ -51,14 +62,15 @@ public class SinhVienAdapter extends RecyclerView.Adapter<SinhVienAdapter.SinhVi
     }
 
     public class SinhVienViewHolder extends RecyclerView.ViewHolder {
-        EditText editIdStudent, editNameStudent, editDobStudent;
+        TextView tvIdStudent, tvNameStudent, tvDobStudent;
         ImageView imgAvtStudent;
 
         public SinhVienViewHolder(@NonNull View itemView) {
             super(itemView);
-            editIdStudent = itemView.findViewById(R.id.tv_idstudent);
-            editNameStudent = itemView.findViewById(R.id.tv_namestudent);
-            editDobStudent = itemView.findViewById(R.id.tv_dobstudent);
+
+            tvIdStudent = itemView.findViewById(R.id.tv_idstudent);
+            tvNameStudent = itemView.findViewById(R.id.tv_namestudent);
+            tvDobStudent = itemView.findViewById(R.id.tv_dobstudent);
             imgAvtStudent = itemView.findViewById(R.id.img_avtstudent);
         }
     }
